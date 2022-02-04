@@ -6,10 +6,13 @@ import { ListarClientes } from "./views/Cliente/Listar";
 import { ListarPedidos } from "./views/Pedido/Listar";
 import { ListarServicos } from "./views/Servico/Listar";
 
+import { Menu } from './components/Menu';
+
 function App() {
   return (
     <div>
       <Router>
+      <Menu/>
         <Switch>
           <Route exact path="/" component={ Home } />
           <Route path="/listar-clientes" component={ ListarClientes } />
