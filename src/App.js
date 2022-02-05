@@ -2,9 +2,9 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Home } from "./views/Home";
-import { ListarClientes } from "./views/Cliente/Listar";
-import { ListarPedidos } from "./views/Pedido/Listar";
-import { ListarServicos } from "./views/Servico/Listar";
+import { ListarClientes } from "./views/Cliente/Cliente_Listar";
+import { ListarPedidos } from "./views/Pedido/Pedido_Listar";
+import { ListarServicos } from "./views/Servico/Servico_Listar";
 
 import { Menu } from './components/Menu';
 

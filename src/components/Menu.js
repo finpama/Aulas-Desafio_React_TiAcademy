@@ -1,7 +1,6 @@
-import { Container, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, } from "reactstrap";
+import { Container, NavLink, Nav, Navbar, NavItem, NavbarBrand } from "reactstrap";
 
 export const Menu = () => {
-    console.clear()
     return (
         <div>
             <Navbar
@@ -9,20 +8,30 @@ export const Menu = () => {
                 dark
                 expand="md"
             >
-                <Container>
+                <Container className="d-flex justify-content-end">
                     <NavbarBrand href="/">
                         Services TiAcademy
                     </NavbarBrand>
-                    <NavbarToggler onClick={function noRefCheck() { }} />
-                    <Collapse navbar>
                         <Nav
-                            className="me-auto"
+                            className="mx-auto"
                             navbar
                         >
                             <NavItem>
+                                <NavLink href="/listar-clientes">
+                                    Listar Clientes
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/listar-pedidos">
+                                    Listar Pedidos
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/listar-servicos">
+                                    Listar Serviços
+                                </NavLink>
                             </NavItem>
                         </Nav>
-                    </Collapse>
                 </Container>
             </Navbar>
         </div>
