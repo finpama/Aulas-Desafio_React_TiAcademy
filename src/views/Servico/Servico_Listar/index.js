@@ -60,7 +60,7 @@ export const ListarServicos = () => {
                                     <td>{item.nome}</td>
                                     <td>{item.descricao}</td>
                                     <td className="text-center">
-                                        <Link className="btn btn-outline-primary" to={'/lista-pedidos/' + item.id}>Pedidos</Link>
+                                        <Link className="btn btn-outline-primary" to={'/listar/itens-servico/' + item.id}>Pedidos</Link>
                                     </td>
                                 </tr>
                             )
