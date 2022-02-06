@@ -5,10 +5,10 @@ import { Alert, Container, Table } from "reactstrap";
 
 import { api } from "../../../config";
 
-export const ListarItensServicos = (props) => {
+export const ListaItensServico = (props) => {
     console.clear()
 
-    const [id, setId] = useState(props.match.params.id)
+    const [id] = useState(props.match.params.id)
 
     const [data, setData] = useState([]);
 
@@ -32,7 +32,7 @@ export const ListarItensServicos = (props) => {
                     console.log(err);
                 });
         }
-        
+
         getItems();
     }, [id]);
 
@@ -41,7 +41,7 @@ export const ListarItensServicos = (props) => {
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
                     <h1>Informações dos Itens</h1>
-                    <Link className="btn btn-primary m-1" to={'/listar/servicos/'}>Voltar</Link>
+                    <Link className="btn btn-primary m-2" to={'/lista/servico/'}>Voltar</Link>
                 </div>
                 {status.type === 'error' ?
                     <Alert color="danger">
@@ -67,7 +67,7 @@ export const ListarItensServicos = (props) => {
                                     <td>{item.quantidade}</td>
                                     <td>{item.valor === null ? 0 : item.valor}</td>
                                     <td className="text-center">
-                                        {/* <Link className="btn btn-outline-primary" to={'/listar/itens-servico/' + item.id}>Pedidos</Link> */}
+                                        {/* <Link className="btn btn-outline-primary" to={'/lista/itens-servico/' + item.id}>Pedidos</Link> */}
                                     </td>
                                 </tr>
                             )

@@ -17,13 +17,13 @@ export const Menu = () => {
                             navbar
                         >
                             <NavItem>
-                                <NavLink href="/listar/clientes">
-                                    Listar Clientes
+                                <NavLink href="/lista/cliente">
+                                    Lista Cliente
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/listar/servicos">
-                                    Listar Serviços
+                                <NavLink href="/lista/servico">
+                                    Lista Serviço
                                 </NavLink>
                             </NavItem>
                         </Nav>

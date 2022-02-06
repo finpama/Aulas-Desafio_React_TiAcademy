@@ -5,7 +5,7 @@ import { Alert, Container, Table } from "reactstrap";
 
 import { api } from "../../../config";
 
-export const ListarServicos = () => {
+export const ListaServico = () => {
     console.clear()
 
     const [data, setData] = useState([]);
@@ -35,8 +35,9 @@ export const ListarServicos = () => {
     return (
         <div>
             <Container className="mt-3">
-                <div>
+                <div className="d-flex justify-content-between">
                     <h1>Informações dos Serviços</h1>
+                    <Link className="btn btn-success m-2" to={'/novo/servico/'}>Novo Serviço</Link>
                 </div>
                 {status.type === 'error' ?
                     <Alert color="danger">
@@ -60,7 +61,7 @@ export const ListarServicos = () => {
                                     <td>{item.nome}</td>
                                     <td>{item.descricao}</td>
                                     <td className="text-center">
-                                        <Link className="btn btn-outline-primary" to={'/listar/itens-servico/' + item.id}>Pedidos</Link>
+                                        <Link className="btn btn-outline-primary" to={'/lista/itens-servico/' + item.id}>Pedidos</Link>
                                     </td>
                                 </tr>
                             )
