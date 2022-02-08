@@ -38,10 +38,11 @@ export const ListaItensServico = (props) => {
 
     return (
         <div>
+            <Link className="voltar btn-sm btn-primary mx-3 my-2"  to="/lista/servico">Voltar</Link>
+
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
                     <h1>Informações dos Itens</h1>
-                    <Link className="btn btn-primary m-2" to={'/lista/servico/'}>Voltar</Link>
                 </div>
                 {status.type === 'error' ?
                     <Alert color="danger">
@@ -55,7 +56,6 @@ export const ListaItensServico = (props) => {
                             <th>ServiçoId</th>
                             <th>Quantidade</th>
                             <th>Valor R$</th>
-                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>{
@@ -66,9 +66,6 @@ export const ListaItensServico = (props) => {
                                     <th>{item.ServicoId}</th>
                                     <td>{item.quantidade}</td>
                                     <td>{item.valor === null ? 0 : item.valor}</td>
-                                    <td className="text-center">
-                                        {/* <Link className="btn btn-outline-primary" to={'/lista/itens-servico/' + item.id}>Pedidos</Link> */}
-                                    </td>
                                 </tr>
                             )
                         })

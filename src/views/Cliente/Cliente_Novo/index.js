@@ -4,26 +4,26 @@ import { Link } from "react-router-dom";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoServico = () => {
+export const NovoCliente = () => {
 
     const [status, setStatus] = useState({
         type: '',
         message: ''
     })
 
-    const [servico, setServico] = useState({
+    const [cliente, setCliente] = useState({
         nome: '',
-        descricao: ''
+        nascimento: ''
     });
 
-    const valorInput = e => setServico({
-        ...servico, [e.target.name]: e.target.value
+    const valorInput = e => setCliente({
+        ...cliente, [e.target.name]: e.target.value
     });
 
-    const NewServico = async e => {
+    const NewCliente = async e => {
         e.preventDefault()
 
-        if (servico.name === '' || servico.descricao === '') {
+        if (cliente.name === '' || cliente.nascimento === '') {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
@@ -35,7 +35,7 @@ export const NovoServico = () => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/servico/novo`, servico, headers)
+        await axios.post(`${api}/cliente/novo`, cliente, headers)
             .then(response => {
                 if (response.data.error) {
                     setStatus({
@@ -47,7 +47,6 @@ export const NovoServico = () => {
                         type: 'success',
                         message: response.data.message
                     });
-                    // history.push('/lista/servico/');
                 }
             })
             .catch(err => {
@@ -61,16 +60,16 @@ export const NovoServico = () => {
 
     return (
         <div>
-            <Link className="voltar btn-sm btn-primary mx-3 my-2"  to="/lista/servico/">Voltar</Link>
+            <Link className="voltar btn-sm btn-primary mx-3 my-2"  to="/lista/cliente/">Voltar</Link>
 
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Novo Serviço</h1>
+                    <h1>Novo Cliente</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
 
-                <Form onSubmit={NewServico} inline>
+                <Form onSubmit={NewCliente} inline>
                     <FormGroup floating>
                         <Input
                             id="nome"
@@ -86,14 +85,14 @@ export const NovoServico = () => {
                     {' '}
                     <FormGroup floating>
                         <Input
-                            id="descricao"
-                            name="descricao"
-                            placeholder="descricao"
+                            id="nascimento"
+                            name="nascimento"
+                            placeholder="nascimento"
                             type="text"
                             onChange={valorInput}
                         />
-                        <Label for="descricao">
-                            Descrição
+                        <Label for="nascimento">
+                            Data de Nascimento
                         </Label>
                     </FormGroup>
                     {' '}

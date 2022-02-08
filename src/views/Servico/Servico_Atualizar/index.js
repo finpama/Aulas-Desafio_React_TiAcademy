@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoServico = () => {
+export const AttServico = (props) => {
+
+    const [id] = useState(props.match.params.id)
 
     const [status, setStatus] = useState({
         type: '',
@@ -12,6 +14,7 @@ export const NovoServico = () => {
     })
 
     const [servico, setServico] = useState({
+        id: null,
         nome: '',
         descricao: ''
     });
@@ -35,7 +38,7 @@ export const NovoServico = () => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/servico/novo`, servico, headers)
+        await axios.put(`${api}/atualizar/servico/${id}`, servico, headers)
             .then(response => {
                 if (response.data.error) {
                     setStatus({
@@ -47,7 +50,6 @@ export const NovoServico = () => {
                         type: 'success',
                         message: response.data.message
                     });
-                    // history.push('/lista/servico/');
                 }
             })
             .catch(err => {
@@ -65,7 +67,7 @@ export const NovoServico = () => {
 
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Novo Serviço</h1>
+                    <h1>Atualizar Serviço</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
@@ -80,7 +82,7 @@ export const NovoServico = () => {
                             onChange={valorInput}
                         />
                         <Label for="nome">
-                            Nome do Serviço
+                            Novo Nome
                         </Label>
                     </FormGroup>
                     {' '}
@@ -93,12 +95,12 @@ export const NovoServico = () => {
                             onChange={valorInput}
                         />
                         <Label for="descricao">
-                            Descrição
+                            Nova Descrição
                         </Label>
                     </FormGroup>
                     {' '}
                     <Button color="primary">
-                        Criar
+                        Atualizar
                     </Button>
                     {status.type === 'error' ?
                         <Alert className="my-3" color="danger">

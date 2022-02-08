@@ -1,3 +1,41 @@
+.txtDec {
+    text-decoration: none;
+}
 label {
     color: gray;
+}
+
+.fkNav {
+    height: 60px;
+}
+
+.voltar {
+    position: fixed;
+    text-decoration: none;
+}
+@media screen and (max-width: 500px) {
+    div .voltar{
+        top: 40px;
+        z-index: 1030;
+    }
+}
+@media screen and (max-width: 670px) {
+    .fkNav {
+        height: 100px;
+    }
+
+    .voltar{
+        top: 65px;
+        z-index: 1030;
+    }
+}
+
+.Navbar_brand {
+    color: white;
+    text-decoration: none;
+    transition: 300ms;
+}
+.Navbar_brand:hover {
+    color: white;
+    text-shadow: 0 0 20px #005de8 ;
 }

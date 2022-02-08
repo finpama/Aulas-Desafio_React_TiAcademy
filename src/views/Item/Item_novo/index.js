@@ -4,26 +4,28 @@ import { Link } from "react-router-dom";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoServico = () => {
+export const NovoItem = () => {
 
     const [status, setStatus] = useState({
         type: '',
         message: ''
     })
 
-    const [servico, setServico] = useState({
-        nome: '',
-        descricao: ''
+    const [item, setItem] = useState({
+        PedidoId: undefined,
+        ServicoId: undefined,
+        quantidade: undefined,
+        valor: undefined
     });
 
-    const valorInput = e => setServico({
-        ...servico, [e.target.name]: e.target.value
+    const valorInput = e => setItem({
+        ...item, [e.target.name]: e.target.value
     });
 
-    const NewServico = async e => {
+    const NewItem = async e => {
         e.preventDefault()
 
-        if (servico.name === '' || servico.descricao === '') {
+        if (item.name === undefined || item.descricao === undefined) {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
@@ -35,19 +37,19 @@ export const NovoServico = () => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/servico/novo`, servico, headers)
+        await axios.post(`${api}/item/novo`, item, headers)
             .then(response => {
                 if (response.data.error) {
                     setStatus({
                         type: 'error',
                         message: response.data.message
                     });
-                } else{
+                } else {
                     setStatus({
                         type: 'success',
                         message: response.data.message
                     });
-                    // history.push('/lista/servico/');
+                    // history.push('/lista/item/');
                 }
             })
             .catch(err => {
@@ -61,16 +63,16 @@ export const NovoServico = () => {
 
     return (
         <div>
-            <Link className="voltar btn-sm btn-primary mx-3 my-2"  to="/lista/servico/">Voltar</Link>
+            <Link className="voltar btn-sm btn-primary mx-3 my-2" to="/lista/item/">Voltar</Link>
 
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Novo Serviço</h1>
+                    <h1>Novo Item</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
 
-                <Form onSubmit={NewServico} inline>
+                <Form onSubmit={NewItem} inline>
                     <FormGroup floating>
                         <Input
                             id="nome"
@@ -80,7 +82,7 @@ export const NovoServico = () => {
                             onChange={valorInput}
                         />
                         <Label for="nome">
-                            Nome do Serviço
+                            Nome do Item
                         </Label>
                     </FormGroup>
                     {' '}
