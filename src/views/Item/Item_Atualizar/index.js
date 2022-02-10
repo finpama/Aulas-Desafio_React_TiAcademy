@@ -3,26 +3,30 @@ import { useState } from "react";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoCliente = () => {
+export const AttItemPedido = (props) => {
+
+    const [PedidoId] = useState(props.match.params.PedidoId)
+    const [ServicoId] = useState(props.match.params.ServicoId)
 
     const [status, setStatus] = useState({
         type: '',
         message: ''
     })
 
-    const [cliente, setCliente] = useState({
+    const [item, setItem] = useState({
+        id: null,
         nome: '',
-        nascimento: ''
+        descricao: ''
     });
 
-    const valorInput = e => setCliente({
-        ...cliente, [e.target.name]: e.target.value
+    const valorInput = e => setItem({
+        ...item, [e.target.name]: e.target.value
     });
 
-    const NewCliente = async e => {
+    const NewItem = async e => {
         e.preventDefault()
 
-        if (cliente.name === '' || cliente.nascimento === '') {
+        if (item.name === '' || item.descricao === '') {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
@@ -34,7 +38,7 @@ export const NovoCliente = () => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/cliente/novo`, cliente, headers)
+        await axios.put(`${api}/atualizar/item/pedido/${PedidoId}/servico/${ServicoId}`, item, headers)
             .then(response => {
                 if (response.data.error) {
                     setStatus({
@@ -61,40 +65,38 @@ export const NovoCliente = () => {
         <div>
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Novo Cliente</h1>
+                    <h1>Atualizar Item Pedido</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
 
-                <Form onSubmit={NewCliente} inline>
+                <Form onSubmit={NewItem} inline>
                     <FormGroup floating>
                         <Input
-                            id="nome"
-                            name="nome"
-                            placeholder="nome"
+                            id="quantidade"
+                            name="quantidade"
+                            placeholder="quantidade"
                             type="text"
                             onChange={valorInput}
                         />
-                        <Label for="nome">
-                            Nome do Serviço
+                        <Label for="quantidade">
+                            Nova Quantidade
                         </Label>
-                    </FormGroup>
-                    {' '}
-                    <FormGroup floating>
+                    </FormGroup><FormGroup floating>
                         <Input
-                            id="nascimento"
-                            name="nascimento"
-                            placeholder="nascimento"
+                            id="valor"
+                            name="valor"
+                            placeholder="valor"
                             type="text"
                             onChange={valorInput}
                         />
-                        <Label for="nascimento">
-                            Data de Nascimento
+                        <Label for="valor">
+                            Novo Valor
                         </Label>
                     </FormGroup>
                     {' '}
                     <Button color="primary">
-                        Criar
+                        Atualizar
                     </Button>
                     {status.type === 'error' ?
                         <Alert className="my-3" color="danger">

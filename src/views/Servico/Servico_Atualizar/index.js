@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
@@ -63,8 +62,6 @@ export const AttServico = (props) => {
 
     return (
         <div>
-            <Link className="voltar btn-sm btn-primary mx-3 my-2"  to="/lista/servico/">Voltar</Link>
-
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
                     <h1>Atualizar Serviço</h1>

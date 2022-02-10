@@ -9,24 +9,9 @@ label {
     height: 60px;
 }
 
-.voltar {
-    position: fixed;
-    text-decoration: none;
-}
-@media screen and (max-width: 500px) {
-    div .voltar{
-        top: 40px;
-        z-index: 1030;
-    }
-}
 @media screen and (max-width: 670px) {
     .fkNav {
         height: 100px;
-    }
-
-    .voltar{
-        top: 65px;
-        z-index: 1030;
     }
 }
 

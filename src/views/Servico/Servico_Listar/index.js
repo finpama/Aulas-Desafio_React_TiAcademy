@@ -56,8 +56,6 @@ export const ListaServico = (props) => {
 
     return (
         <div>
-            <Link className="voltar btn-sm btn-primary mx-3 my-2" to="/">Voltar</Link>
-
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
                     <h1>Informações dos Serviços</h1>
@@ -85,7 +83,7 @@ export const ListaServico = (props) => {
                                     <td>{serv.nome}</td>
                                     <td>{serv.descricao}</td>
                                     <td className="text-center">
-                                        <Link className="m-1 txtDec btn-sm btn-primary" to={'/lista/itens-servico/' + serv.id}>Pedidos</Link>
+                                        <Link className="m-1 txtDec btn-sm btn-primary" to={'/lista/itempedido-servico/' + serv.id}>Pedidos</Link>
                                         <Link className="m-1 txtDec btn-sm btn-success" to={'/atualizar/servico/' + serv.id}>Atualizar</Link>
                                         <Button onClick={delServico} className="m-1 btn-sm btn-danger">Excluir</Button>
                                     </td>
