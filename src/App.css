@@ -15,6 +15,15 @@ label {
     }
 }
 
+@media screen and (max-width: 991px) {
+    .fd-colunn {
+        flex-direction: column;
+    }
+    img.cardImg {
+        width: 100%!important;
+    }
+}
+
 .Navbar_brand {
     color: white;
     text-decoration: none;

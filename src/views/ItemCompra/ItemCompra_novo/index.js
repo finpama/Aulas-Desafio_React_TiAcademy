@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoItem = (props) => {
-    console.clear()
+export const NovoItemCompra = (props) => {
 
     const [id] = useState(props.match.params.id)
 
@@ -14,8 +13,8 @@ export const NovoItem = (props) => {
     })
 
     const [item, setItem] = useState({
-        PedidoId: id,
-        ServicoId: null,
+        CompraId: id,
+        ProdutoId: null,
         quantidade: null,
         valor: null
     });
@@ -27,7 +26,7 @@ export const NovoItem = (props) => {
     const NewItem = async e => {
         e.preventDefault()
 
-        if (item.ServicoId === null || item.quantidade === null) {
+        if (item.ProdutoId === null || item.quantidade === null) {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
@@ -47,7 +46,7 @@ export const NovoItem = (props) => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/item/novo`, item, headers)
+        await axios.post(`${api}/item-compra/novo`, item, headers)
             .then(response => {
                 if (response.data.logMessage === undefined) {
                     setStatus({
@@ -59,9 +58,10 @@ export const NovoItem = (props) => {
                     if (response.data.logMessage.name === 'SequelizeUniqueConstraintError') {
                         setStatus({
                             type: 'error',
-                            message: 'Pedido Já existe, atualize o item já existente'
+                            message: 'Compra Já existe, atualize o item já existente'
                         });
                     }
+                    console.log(response.data.logMessage);
                 }
             })
             .catch(err => {
@@ -77,7 +77,7 @@ export const NovoItem = (props) => {
         <div>
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Pedido: Novo Item</h1>
+                    <h1>Compra: Novo Item</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
@@ -85,14 +85,14 @@ export const NovoItem = (props) => {
                 <Form onSubmit={NewItem} inline>
                     <FormGroup floating>
                         <Input
-                            id="ServicoId"
-                            name="ServicoId"
-                            placeholder="ServicoId"
+                            id="ProdutoId"
+                            name="ProdutoId"
+                            placeholder="ProdutoId"
                             type="text"
                             onChange={valorInput}
                         />
-                        <Label for="ServicoId">
-                            Insira o ServicoId
+                        <Label for="ProdutoId">
+                            Insira o ProdutoId
                         </Label>
                     </FormGroup>
                     {' '}
@@ -117,7 +117,7 @@ export const NovoItem = (props) => {
                             onChange={valorInput}
                         />
                         <Label for="valor">
-                            Valor R$
+                            Valor R$0.00
                         </Label>
                     </FormGroup>
                     {' '}

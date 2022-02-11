@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoItem = (props) => {
-    console.clear()
+export const AttItemCompra = (props) => {
 
-    const [id] = useState(props.match.params.id)
+    const [CompraId] = useState(props.match.params.CompraId)
+    const [ProdutoId] = useState(props.match.params.ProdutoId)
 
     const [status, setStatus] = useState({
         type: '',
@@ -14,10 +14,9 @@ export const NovoItem = (props) => {
     })
 
     const [item, setItem] = useState({
-        PedidoId: id,
-        ServicoId: null,
-        quantidade: null,
-        valor: null
+        id: null,
+        quantidade: '',
+        valor: ''
     });
 
     const valorInput = e => setItem({
@@ -27,7 +26,7 @@ export const NovoItem = (props) => {
     const NewItem = async e => {
         e.preventDefault()
 
-        if (item.ServicoId === null || item.quantidade === null) {
+        if (item.quantidade === '' || item.valor === '') {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
@@ -47,25 +46,22 @@ export const NovoItem = (props) => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/item/novo`, item, headers)
+        await axios.put(`${api}/atualizar/item/compra/${CompraId}/produto/${ProdutoId}`, item, headers)
             .then(response => {
-                if (response.data.logMessage === undefined) {
+                if (response.data.error) {
+                    setStatus({
+                        type: 'error',
+                        message: response.data.message
+                    });
+                } else{
                     setStatus({
                         type: 'success',
                         message: response.data.message
                     });
-
-                } else {
-                    if (response.data.logMessage.name === 'SequelizeUniqueConstraintError') {
-                        setStatus({
-                            type: 'error',
-                            message: 'Pedido Já existe, atualize o item já existente'
-                        });
-                    }
                 }
             })
             .catch(err => {
-                console.error(err);
+                console.log(err);
                 setStatus({
                     type: 'error',
                     message: 'Sem conexão com Servidor'
@@ -77,25 +73,12 @@ export const NovoItem = (props) => {
         <div>
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Pedido: Novo Item</h1>
+                    <h1>Atualizar Item Compra</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
 
                 <Form onSubmit={NewItem} inline>
-                    <FormGroup floating>
-                        <Input
-                            id="ServicoId"
-                            name="ServicoId"
-                            placeholder="ServicoId"
-                            type="text"
-                            onChange={valorInput}
-                        />
-                        <Label for="ServicoId">
-                            Insira o ServicoId
-                        </Label>
-                    </FormGroup>
-                    {' '}
                     <FormGroup floating>
                         <Input
                             id="quantidade"
@@ -105,10 +88,9 @@ export const NovoItem = (props) => {
                             onChange={valorInput}
                         />
                         <Label for="quantidade">
-                            Quantidade
+                            Nova Quantidade
                         </Label>
-                    </FormGroup>
-                    <FormGroup floating>
+                    </FormGroup><FormGroup floating>
                         <Input
                             id="valor"
                             name="valor"
@@ -117,12 +99,12 @@ export const NovoItem = (props) => {
                             onChange={valorInput}
                         />
                         <Label for="valor">
-                            Valor R$
+                            Novo Valor
                         </Label>
                     </FormGroup>
                     {' '}
                     <Button color="primary">
-                        Criar
+                        Atualizar
                     </Button>
                     {status.type === 'error' ?
                         <Alert className="my-3" color="danger">

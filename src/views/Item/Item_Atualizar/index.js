@@ -15,8 +15,8 @@ export const AttItemPedido = (props) => {
 
     const [item, setItem] = useState({
         id: null,
-        nome: '',
-        descricao: ''
+        quantidade: '',
+        valor: ''
     });
 
     const valorInput = e => setItem({
@@ -30,6 +30,14 @@ export const AttItemPedido = (props) => {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
+            });
+            return;
+        }
+
+        if (item.valor.includes(',')) {
+            setStatus({
+                type: 'error',
+                message: 'Use ponto no lugar da vírgula no campo valor'
             });
             return;
         }

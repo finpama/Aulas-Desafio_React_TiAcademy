@@ -84,6 +84,7 @@ export const ListaCliente = () => {
                                     <td>{serv.nascimento}</td>
                                     <td className="text-center">
                                         <Link className="m-1 txtDec btn-sm btn-primary" to={'/lista/pedidos-cliente/' + serv.id}>Pedidos</Link>
+                                        <Link className="m-1 txtDec btn-sm btn-primary" to={'/lista/compras-cliente/' + serv.id}>Compras</Link>
                                         <Link className="m-1 txtDec btn-sm btn-success" to={'/atualizar/cliente/' + serv.id}>Atualizar</Link>
                                         <Button onClick={delCliente} className="m-1 btn-sm btn-danger">Excluir</Button>
                                     </td>

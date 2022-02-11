@@ -24,6 +24,8 @@ export const Menu = () => {
                         </NavItem>
                         <NavItem>
                             <Link className="btn btn-outline-light m-1" to="/lista/servico/">Serviços</Link>
+                        </NavItem><NavItem>
+                            <Link className="btn btn-outline-light m-1" to="/lista/produto/">Produtos</Link>
                         </NavItem>
                     </Nav>
                 </Container>

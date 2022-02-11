@@ -5,10 +5,8 @@ import { Alert, Button, Container, Table } from "reactstrap";
 
 import { api } from "../../../config";
 
-export const ListaItensPedido = (props) => {
+export const ListaProduto = () => {
     console.clear()
-
-    const [id] = useState(props.match.params.id)
 
     const [data, setData] = useState([]);
 
@@ -17,10 +15,10 @@ export const ListaItensPedido = (props) => {
         message: ''
     });
 
-    const getItems = async () => {
-        await axios.get(`${api}/pedido/${id}/items-pedidos`)
+    const getProdutos = async () => {
+        await axios.get(api + '/produto/lista')
             .then(response => {
-                setData(response.data.itemPedido);
+                setData(response.data.produtos);
             })
             .catch(err => {
                 setStatus({
@@ -32,20 +30,20 @@ export const ListaItensPedido = (props) => {
     }
 
     useEffect(() => {
-        getItems();
-    }, [id]);
+        getProdutos();
+    }, []);
 
-    const delItem = async (e) => {
+    const delProdutos = async (e) => {
         const tr = e.target.parentNode.parentNode;
-        const ServicoId = tr.dataset.id;
+        const ProdutosId = tr.dataset.id;
 
-        await axios.delete(`${api}/item-pedido/${id}/${ServicoId}/excluir`)
+        await axios.delete(`${api}/produto/${ProdutosId}/excluir`)
             .then(() => {
                 setStatus({
                     type: 'deletion',
-                    message: 'Item excluido com sucesso'
+                    message: 'Produto excluido com sucesso'
                 });
-                getItems();
+                getProdutos();
             })
             .catch(err => {
                 setStatus({
@@ -60,10 +58,10 @@ export const ListaItensPedido = (props) => {
         <div>
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Itens do Pedido</h1>
-                    <Link className="btn btn-outline-success m-2" to={'/novo/item-pedido/' + id}>Novo Item</Link>
+                    <h1>Informações dos Produtos</h1>
+                    <Link className="btn btn-outline-success m-2" to={'/novo/produto/'}>Novo Produto</Link>
                 </div>
-                {status.type === 'error' ?
+                {status.type !== '' ?
                     <Alert color="danger">
                         {status.message}
                     </Alert> : ''
@@ -71,24 +69,23 @@ export const ListaItensPedido = (props) => {
                 <Table striped>
                     <thead>
                         <tr>
-                            <th>PedidoId</th>
-                            <th>ServiçoId</th>
-                            <th>Quantidade</th>
-                            <th>Valor R$</th>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>{
-                        data.map(item => {
+                        data.map(prod => {
                             return (
-                                <tr data-id={item.ServicoId} key={item.ServicoId}>
-                                    <th>{item.PedidoId}</th>
-                                    <th>{item.ServicoId}</th>
-                                    <td>{item.quantidade}</td>
-                                    <td>{item.valor === null ? 0 : item.valor}</td>
-                                    <td>
-                                        <Link className="m-1 txtDec btn-sm btn-success" to={`/atualizar/item-pedido/${item.PedidoId}/${item.ServicoId}`}>Atualizar</Link>
-                                        <Button onClick={delItem} className="m-1 btn-sm btn-danger">Excluir</Button>
+                                <tr data-id={prod.id} key={prod.id}>
+                                    <th>{prod.id}</th>
+                                    <td>{prod.nome}</td>
+                                    <td>{prod.descricao}</td>
+                                    <td className="text-center">
+                                        <Link className="m-1 txtDec btn-sm btn-primary" to={'/lista/item-compra/produto/' + prod.id}>Compras</Link>
+                                        <Link className="m-1 txtDec btn-sm btn-success" to={'/atualizar/produto/' + prod.id}>Atualizar</Link>
+                                        <Button onClick={delProdutos} className="m-1 btn-sm btn-danger">Excluir</Button>
                                     </td>
                                 </tr>
                             )

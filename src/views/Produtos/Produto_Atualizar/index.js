@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Alert, Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { api } from "../../../config";
 
-export const NovoItem = (props) => {
-    console.clear()
+export const AttProduto = (props) => {
 
     const [id] = useState(props.match.params.id)
 
@@ -13,32 +12,23 @@ export const NovoItem = (props) => {
         message: ''
     })
 
-    const [item, setItem] = useState({
-        PedidoId: id,
-        ServicoId: null,
-        quantidade: null,
-        valor: null
+    const [produto, setProduto] = useState({
+        id: null,
+        nome: '',
+        descricao: ''
     });
 
-    const valorInput = e => setItem({
-        ...item, [e.target.name]: e.target.value
+    const valorInput = e => setProduto({
+        ...produto, [e.target.name]: e.target.value
     });
 
-    const NewItem = async e => {
+    const NewProduto = async e => {
         e.preventDefault()
 
-        if (item.ServicoId === null || item.quantidade === null) {
+        if (produto.name === '' || produto.descricao === '') {
             setStatus({
                 type: 'error',
                 message: 'Insira dados'
-            });
-            return;
-        }
-
-        if (item.valor.includes(',')) {
-            setStatus({
-                type: 'error',
-                message: 'Use ponto no lugar da vírgula no campo valor'
             });
             return;
         }
@@ -47,25 +37,22 @@ export const NovoItem = (props) => {
             'Content-Type': 'application/json'
         }
 
-        await axios.post(`${api}/item/novo`, item, headers)
+        await axios.put(`${api}/atualizar/produto/${id}`, produto, headers)
             .then(response => {
-                if (response.data.logMessage === undefined) {
+                if (response.data.error) {
+                    setStatus({
+                        type: 'error',
+                        message: response.data.message
+                    });
+                } else{
                     setStatus({
                         type: 'success',
                         message: response.data.message
                     });
-
-                } else {
-                    if (response.data.logMessage.name === 'SequelizeUniqueConstraintError') {
-                        setStatus({
-                            type: 'error',
-                            message: 'Pedido Já existe, atualize o item já existente'
-                        });
-                    }
                 }
             })
             .catch(err => {
-                console.error(err);
+                console.log(err);
                 setStatus({
                     type: 'error',
                     message: 'Sem conexão com Servidor'
@@ -77,52 +64,40 @@ export const NovoItem = (props) => {
         <div>
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Pedido: Novo Item</h1>
+                    <h1>Atualizar Produto</h1>
                 </div>
 
                 <hr className="m-3 mb-4" />
 
-                <Form onSubmit={NewItem} inline>
+                <Form onSubmit={NewProduto} inline>
                     <FormGroup floating>
                         <Input
-                            id="ServicoId"
-                            name="ServicoId"
-                            placeholder="ServicoId"
+                            id="nome"
+                            name="nome"
+                            placeholder="nome"
                             type="text"
                             onChange={valorInput}
                         />
-                        <Label for="ServicoId">
-                            Insira o ServicoId
+                        <Label for="nome">
+                            Novo Nome
                         </Label>
                     </FormGroup>
                     {' '}
                     <FormGroup floating>
                         <Input
-                            id="quantidade"
-                            name="quantidade"
-                            placeholder="quantidade"
+                            id="descricao"
+                            name="descricao"
+                            placeholder="descricao"
                             type="text"
                             onChange={valorInput}
                         />
-                        <Label for="quantidade">
-                            Quantidade
-                        </Label>
-                    </FormGroup>
-                    <FormGroup floating>
-                        <Input
-                            id="valor"
-                            name="valor"
-                            placeholder="valor"
-                            type="text"
-                            onChange={valorInput}
-                        />
-                        <Label for="valor">
-                            Valor R$
+                        <Label for="descricao">
+                            Nova Descrição
                         </Label>
                     </FormGroup>
                     {' '}
                     <Button color="primary">
-                        Criar
+                        Atualizar
                     </Button>
                     {status.type === 'error' ?
                         <Alert className="my-3" color="danger">

@@ -6,7 +6,7 @@ import { newDateOnly } from "../../../components/Tools";
 
 import { api } from "../../../config";
 
-export const ListaPedidosCliente = (props) => {
+export const ListaComprasCliente = (props) => {
     console.clear()
 
     const [id] = useState(props.match.params.id)
@@ -18,10 +18,10 @@ export const ListaPedidosCliente = (props) => {
         message: ''
     });
 
-    const getPedidos =  useCallback(async () => {
-        await axios.get(`${api}/cliente/${id}/pedidos`)
+    const getCompras =  useCallback(async () => {
+        await axios.get(`${api}/cliente/${id}/compras`)
             .then(response => {
-                setData(response.data.pedido);
+                setData(response.data.compras);
                 return;
             })
             .catch(err => {
@@ -34,20 +34,20 @@ export const ListaPedidosCliente = (props) => {
     },[id])
 
     useEffect(() => {
-        getPedidos();
-    }, [id, getPedidos]);
+        getCompras();
+    }, [id, getCompras]);
 
-    const delPedido = async (e) => {
+    const delCompra = async (e) => {
         const tr = e.target.parentNode.parentNode;
-        const PedidoId = tr.dataset.id;
+        const CompraId = tr.dataset.id;
 
-        await axios.delete(`${api}/pedido/${PedidoId}/excluir`)
+        await axios.delete(`${api}/compra/${CompraId}/excluir`)
             .then(() => {
                 setStatus({
                     type: 'deletion',
-                    message: 'Pedido excluido com sucesso'
+                    message: 'Compra excluido com sucesso'
                 });
-                getPedidos();
+                getCompras();
             })
             .catch(err => {
                 setStatus({
@@ -58,7 +58,7 @@ export const ListaPedidosCliente = (props) => {
             });
     }
 
-    const novoPedido = async () => {
+    const novoCompra = async () => {
 
         const headers = {
             "Content-Type": "application/json"
@@ -66,16 +66,16 @@ export const ListaPedidosCliente = (props) => {
 
         const body = {
             "ClienteId": id,
-            "dataPedido": newDateOnly()
+            "data": new Date()
         }
 
-        await axios.post(`${api}/pedido/novo`, body, headers)
+        await axios.post(`${api}/compra/novo`, body, headers)
             .then(() => {
                 setStatus({
                     type: 'deletion',
-                    message: 'Pedido excluido com sucesso'
+                    message: 'Compra excluido com sucesso'
                 });
-                getPedidos();
+                getCompras();
             })
             .catch(err => {
                 setStatus({
@@ -90,8 +90,8 @@ export const ListaPedidosCliente = (props) => {
         <div>
             <Container className="mt-3">
                 <div className="d-flex justify-content-between">
-                    <h1>Pedidos do Cliente</h1>
-                    <Button onClick={novoPedido} color="outline-success" className="m-2">Novo Pedido</Button>
+                    <h1>Compras do Cliente</h1>
+                    <Button onClick={novoCompra} color="outline-success" className="m-2">Nova Compra</Button>
                 </div>
                 {status.type === 'error' ?
                     <Alert color="danger">
@@ -108,15 +108,15 @@ export const ListaPedidosCliente = (props) => {
                         </tr>
                     </thead>
                     <tbody>{
-                        data.map(pedido => {
+                        data.map(compra => {
                             return (
-                                <tr data-id={pedido.id} key={pedido.id}>
-                                    <th>{pedido.id}</th>
-                                    <td>{pedido.ClienteId}</td>
-                                    <td>{pedido.dataPedido}</td>
+                                <tr data-id={compra.id} key={compra.id}>
+                                    <th>{compra.id}</th>
+                                    <td>{compra.ClienteId}</td>
+                                    <td>{compra.data}</td>
                                     <td>
-                                        <Link className="m-1 px-3 txtDec btn-sm btn-primary" to={'/lista/itenspedidos-pedido/' + pedido.id}>Itens</Link>
-                                        <Button onClick={delPedido} className="m-1 btn-sm btn-danger">Excluir</Button>
+                                        <Link className="m-1 px-3 txtDec btn-sm btn-primary" to={`/lista/compra/${compra.id}/itens`}>Itens</Link>
+                                        <Button onClick={delCompra} className="m-1 btn-sm btn-danger">Excluir</Button>
                                     </td>
 
                                 </tr>
